@@ -2,8 +2,6 @@ package basics
 
 import (
 	"fmt"
-	"log"
-	"regexp"
 	"strings"
 )
 
@@ -37,11 +35,7 @@ func Max(list []int) int {
 }
 
 func WordCount(text string) map[string]int {
-	re, err := regexp.Compile(`[^\w]`)
-	if err != nil {
-		log.Fatal(err)
-	}
-	text = re.ReplaceAllString(text, " ")
+	text = RemovePunctuation(text)
 	words := map[string]int{}
 	for _, word := range strings.Fields(text) {
 		words[strings.ToLower(word)] += 1
