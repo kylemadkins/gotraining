@@ -1,6 +1,9 @@
 package funcs
 
-import "fmt"
+import (
+	"fmt"
+	"net/http"
+)
 
 func Divmod(x int, y int) (int, int) {
 	return x / y, x % y
@@ -23,4 +26,13 @@ func Acquire(name string) (string, error) {
 
 func Release(name string) {
 	fmt.Printf("Cleaning up %s\n", name)
+}
+
+func ContentType(url string) (string, error) {
+	resp, err := http.Get(url)
+	if err != nil {
+		return "", err
+	}
+	defer resp.Body.Close()
+	return resp.Header.Get("Content-Type"), nil
 }

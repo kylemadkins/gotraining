@@ -31,4 +31,10 @@ func main() {
 	fmt.Println(v)
 
 	funcs.Worker()
+
+	ctype, err := funcs.ContentType("https://pokeapi.co/api/v2/pokemon/ditto")
+	if err != nil {
+		fmt.Println(err)
+	}
+	fmt.Println(ctype)
 }
