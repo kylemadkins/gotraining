@@ -50,4 +50,15 @@ func main() {
 
 	c := &oop.Capper{Wtr: os.Stdout}
 	fmt.Fprintln(c, "Hello there")
+
+	intv, interr := oop.Min([]int{-2, -9, 2, 4, 5})
+	if interr != nil {
+		fmt.Println(interr)
+	}
+	fmt.Println(intv)
+	flv, flerr := oop.Min([]float32{19.2, 8.34, 1.77, 21.0, 0.95})
+	if flerr != nil {
+		fmt.Println(interr)
+	}
+	fmt.Println(flv)
 }
