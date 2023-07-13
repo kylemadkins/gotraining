@@ -2,6 +2,7 @@ package oop
 
 import (
 	"fmt"
+	"io"
 )
 
 type Square struct {
@@ -29,4 +30,20 @@ func (s *Square) Move(dx int, dy int) {
 
 func (s *Square) Area() int {
 	return s.Length * s.Length
+}
+
+type Capper struct {
+	Wtr io.Writer
+}
+
+func (c *Capper) Write(p []byte) (int, error) {
+	diff := byte('a' - 'A')
+	out := make([]byte, len(p))
+	for i, c := range p {
+		if c >= 'a' && c <= 'z' {
+			c -= diff
+		}
+		out[i] = c
+	}
+	return c.Wtr.Write(out)
 }

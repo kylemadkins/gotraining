@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"os"
 
 	"github.com/kylemadkins/gotraining/basics"
 	"github.com/kylemadkins/gotraining/funcs"
@@ -46,4 +47,7 @@ func main() {
 	sq.Move(2, 3)
 	fmt.Printf("%+v\n", sq)
 	fmt.Println(sq.Area())
+
+	c := &oop.Capper{Wtr: os.Stdout}
+	fmt.Fprintln(c, "Hello there")
 }
