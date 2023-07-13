@@ -8,6 +8,7 @@ import (
 
 	"github.com/kylemadkins/gotraining/basics"
 	"github.com/kylemadkins/gotraining/funcs"
+	"github.com/kylemadkins/gotraining/networking"
 	"github.com/kylemadkins/gotraining/oop"
 )
 
@@ -124,4 +125,12 @@ func main() {
 	start = time.Now()
 	ContentTypesChannel(urls)
 	fmt.Println(time.Since(start))
+
+	kyle, err := networking.UserInfo("kylemadkins")
+	if err != nil {
+		fmt.Println(err)
+	}
+	if kyle != nil {
+		fmt.Println(kyle)
+	}
 }
