@@ -3,11 +3,39 @@ package main
 import (
 	"fmt"
 	"os"
+	"sync"
+	"time"
 
 	"github.com/kylemadkins/gotraining/basics"
 	"github.com/kylemadkins/gotraining/funcs"
 	"github.com/kylemadkins/gotraining/oop"
 )
+
+func ContentTypes(urls []string) {
+	for _, url := range urls {
+		ctype, cterr := funcs.ContentType(url)
+		if cterr != nil {
+			fmt.Println(cterr)
+		}
+		fmt.Println(ctype)
+	}
+}
+
+func ContentTypesConcurrent(urls []string) {
+	var wg sync.WaitGroup
+	for _, url := range urls {
+		wg.Add(1)
+		go func(url string) {
+			ctype, cterr := funcs.ContentType(url)
+			if cterr != nil {
+				fmt.Println(cterr)
+			}
+			fmt.Println(ctype)
+			wg.Done()
+		}(url)
+	}
+	wg.Wait()
+}
 
 func main() {
 	basics.FizzBuzz(1, 20)
@@ -61,4 +89,16 @@ func main() {
 		fmt.Println(interr)
 	}
 	fmt.Println(flv)
+
+	urls := []string{
+		"https://golang.org",
+		"https://api.github.com",
+		"https://httpbin.org/ip",
+	}
+	start := time.Now()
+	ContentTypes(urls)
+	fmt.Println(time.Since(start))
+	start = time.Now()
+	ContentTypesConcurrent(urls)
+	fmt.Println(time.Since(start))
 }
