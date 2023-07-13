@@ -37,6 +37,24 @@ func ContentTypesConcurrent(urls []string) {
 	wg.Wait()
 }
 
+func ContentTypesChannel(urls []string) {
+	ch := make(chan string)
+	for _, url := range urls {
+		go func(url string) {
+			ctype, cterr := funcs.ContentType(url)
+			if cterr != nil {
+				fmt.Println(cterr)
+			}
+			ch <- ctype
+		}(url)
+	}
+
+	for range urls {
+		ctype := <-ch
+		fmt.Println(ctype)
+	}
+}
+
 func main() {
 	basics.FizzBuzz(1, 20)
 
@@ -98,7 +116,12 @@ func main() {
 	start := time.Now()
 	ContentTypes(urls)
 	fmt.Println(time.Since(start))
+
 	start = time.Now()
 	ContentTypesConcurrent(urls)
+	fmt.Println(time.Since(start))
+
+	start = time.Now()
+	ContentTypesChannel(urls)
 	fmt.Println(time.Since(start))
 }
