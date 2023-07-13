@@ -5,6 +5,7 @@ import (
 
 	"github.com/kylemadkins/gotraining/basics"
 	"github.com/kylemadkins/gotraining/funcs"
+	"github.com/kylemadkins/gotraining/oop"
 )
 
 func main() {
@@ -32,9 +33,17 @@ func main() {
 
 	funcs.Worker()
 
-	ctype, err := funcs.ContentType("https://pokeapi.co/api/v2/pokemon/ditto")
-	if err != nil {
-		fmt.Println(err)
+	ctype, cterr := funcs.ContentType("https://pokeapi.co/api/v2/pokemon/ditto")
+	if cterr != nil {
+		fmt.Println(cterr)
 	}
 	fmt.Println(ctype)
+
+	sq, sqerr := oop.NewSquare(1, 1, 10)
+	if sqerr != nil {
+		fmt.Println(sqerr)
+	}
+	sq.Move(2, 3)
+	fmt.Printf("%+v\n", sq)
+	fmt.Println(sq.Area())
 }
